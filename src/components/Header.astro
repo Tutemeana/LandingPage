@@ -1,0 +1,64 @@
+---
+import Logo from "./logo.astro";
+---
+
+<header 
+    id="header"
+    class="py-5 px-10 flex items-center fixed top-0 w-full justify-between z-40">
+    
+    <div class="h-16 w-auto flex flex-grow basis-0">
+        <Logo />
+    </div>
+    
+    <nav>
+        <ul class="flex [&>li>a]:inline-block [&>li>a]:text-white [&>li>a]:font-semibold [&>li>a]:px-12 [&>li>a]:py-2">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+            <li><a href="/historia">Historia</a></li>
+        </ul>
+    </nav>
+    
+    <nav class="flex flex-grow justify-end basis-0">
+        <ul class="[&>li>a]:text-white flex [&>li>a]:inline-block [&>li>a]:px-12 [&>li>a]:font-semibold [&>li>a]:py-2">
+            <li><a href="/contribuciones">Contribuciones</a></li>
+        </ul>
+    
+    </nav>
+
+    <div
+     id="menu-backdrop"
+     class={`
+        absolute bg-blue-600/20 backdrop-blur-sm rounded-xl
+        translate-x-[var(--left)] translate-y-[var(--top)]
+        left-0 top-0
+        w-[var(--width)] h-[var(--height)]
+        transition-all duration-700
+        ease-in-out opacity-0 -z-10
+      `}
+    />
+
+</header>
+
+<script>
+    const listItem = document.querySelectorAll("#header li")
+    const menuBackDrop = document.querySelector("#menu-backdrop") as HTMLElement
+  
+    listItem.forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        const { left, top, width, height } = item.getBoundingClientRect()
+  
+        menuBackDrop.style.setProperty("--left", `${left}px`)
+        menuBackDrop.style.setProperty("--top", `${top}px`)
+        menuBackDrop.style.setProperty("--width", `${width}px`)
+        menuBackDrop.style.setProperty("--height", `${height}px`)
+  
+        menuBackDrop.style.opacity = "1"
+        menuBackDrop.style.visibility = "visible"
+      })
+  
+      item.addEventListener("mouseleave", () => {
+        menuBackDrop.style.opacity = "0"
+        menuBackDrop.style.visibility = "hidden"
+      })
+    })
+  </script>

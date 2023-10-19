@@ -1,0 +1,64 @@
+<section class="h-screen w-screen text-center relative overflow-hidden">
+    
+    <header class="flex flex-col items-center justify-center object-center h-screen">
+        <div class=" bg-teal-300/5 backdrop-blur-sm p-8 rounded  shadow-2xl shadow-yellow-200/60 justify-center items-center w-96 object-center flex flex-col z-40">
+          <h1 class="text-2xl font-bold mb-4">Calculadora de Turno</h1>
+      
+          <label class="block mb-2" for="fecha">Seleccionar día:</label>
+          <input type="date" id="fecha" class="border rounded w-full p-2 mb-4">
+      
+          <label class="block mb-2" for="horaEntrada">Hora de entrada:</label>
+          <input type="time" id="horaEntrada" class="border rounded w-full p-2 mb-4">
+      
+          <label class="block mb-2" for="horaSalida">Hora de salida:</label>
+          <input type="time" id="horaSalida" class="border rounded w-full p-2 mb-4">
+      
+          <label class="block mb-2" for="valorHora">Valor de la hora trabajada:</label>
+          <input type="number" id="valorHora" class="border rounded w-full p-2 mb-4">
+      
+          <button type="button" id="calcularButton" class="bg-blue-500 text-white py-2 px-4 rounded">Calcular</button>
+      
+          <div id="resultado" class="mt-4"></div>
+        </div>
+      
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              document.getElementById('calcularButton').addEventListener('click', calcularTurno);
+            });
+        
+            function calcularTurno() {
+              const fecha = (document.getElementById('fecha') as HTMLInputElement).value;
+              const horaEntrada = (document.getElementById('horaEntrada') as HTMLInputElement).value;
+              const horaSalida = (document.getElementById('horaSalida') as HTMLInputElement).value;
+              const valorHora = parseFloat((document.getElementById('valorHora') as HTMLInputElement).value);
+        
+              
+              if (!fecha || !horaEntrada || !horaSalida || isNaN(valorHora)) {
+                 console.log('Campos vacíos o inválidos');
+                 return;
+              }
+        
+              const tiempoEntrada = new Date(`${fecha}T${horaEntrada}`);
+              const tiempoSalida = new Date(`${fecha}T${horaSalida}`);
+        
+              const horasTrabajadas = (tiempoSalida.getTime() - tiempoEntrada.getTime()) / (1000 * 60 * 60);
+        
+              const totalPagar = horasTrabajadas * valorHora;
+        
+              document.getElementById('resultado').innerHTML = `Total de horas trabajadas: ${horasTrabajadas.toFixed(2)}<br> Total a pagar: $${totalPagar.toFixed(2)}`;
+            }
+        </script>
+    </header>
+   
+
+
+
+    <div class="absolute top-0 bottom-0 z-10">
+        <video 
+        class="object-center object-cover h-screen w-screen"
+        autoplay 
+        muted 
+        loop  
+        src="/Bg.mp4"></video>	
+    </div>
+</section>
